@@ -47,20 +47,21 @@ class Train:
             json.dump(self._model, file, ensure_ascii=False)
 
 
-parser = argparse.ArgumentParser(description="Обучение модели")
-parser.add_argument("--input-dir", dest="input_dir", type=str)
-parser.add_argument("--model", dest="model_file", default="model", type=str, required=True)
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Обучение модели")
+    parser.add_argument("--input-dir", dest="input_dir", type=str)
+    parser.add_argument("--model", dest="model_file", default="model", type=str, required=True)
+    args = parser.parse_args()
 
-t = Train()
-if args.input_dir is not None:
-    t.generate_from_directory(args.input_dir)
-else:
-    dir_name = str(hash(__file__))
-    os.mkdir(dir_name)
-    with open(f"{dir_name}/data.txt", "w", encoding="utf-8") as f:
-        f.write(sys.stdin.read())
-    t.generate_from_directory(dir_name)
-    os.remove(f"{dir_name}/data.txt")
-    os.removedirs(dir_name)
-t.save_model(args.model_file)
+    t = Train()
+    if args.input_dir is not None:
+        t.generate_from_directory(args.input_dir)
+    else:
+        dir_name = str(hash(__file__))
+        os.mkdir(dir_name)
+        with open(f"{dir_name}/data.txt", "w", encoding="utf-8") as f:
+            f.write(sys.stdin.read())
+        t.generate_from_directory(dir_name)
+        os.remove(f"{dir_name}/data.txt")
+        os.removedirs(dir_name)
+    t.save_model(args.model_file)

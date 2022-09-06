@@ -22,7 +22,7 @@ class Generator:
 
     def generate(self, block_duplicates) -> str:
         """
-        bool:param block_duplicates: Запрещяет дублировать слова
+        bool:param block_duplicates: Запрещает дублировать слова
         """
         last_word = random.choice(list(self._model.keys()))
         phrase = []
@@ -45,14 +45,15 @@ class Generator:
         return ' '.join(phrase)
 
 
-parser = argparse.ArgumentParser(description="Генерация слов")
-parser.add_argument("--prefix", dest="prefix", default="", type=str)
-parser.add_argument("--length", dest="length", default=10, type=int)
-parser.add_argument("--no-repeat", dest="no_repeat", default=False, nargs='?', const=True)
-parser.add_argument("--model", dest="model_file", default="model", type=str, required=True)
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Генерация слов")
+    parser.add_argument("--prefix", dest="prefix", default="", type=str)
+    parser.add_argument("--length", dest="length", default=10, type=int)
+    parser.add_argument("--no-repeat", dest="no_repeat", default=False, nargs='?', const=True)
+    parser.add_argument("--model", dest="model_file", default="model", type=str, required=True)
+    args = parser.parse_args()
 
-g = Generator(args.prefix.split(" "))
-g.load_model(args.model_file)
-g.set_length(args.length)
-print(g.generate(args.no_repeat))
+    g = Generator(args.prefix.split(" "))
+    g.load_model(args.model_file)
+    g.set_length(args.length)
+    print(g.generate(args.no_repeat))
